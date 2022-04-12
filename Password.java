@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class Password {
     private int strlen;
     private boolean NO_SPACES = true;
@@ -7,6 +9,7 @@ class Password {
     private boolean LENGTH_CHECK = true;
 
     public boolean check(String Input) {
+        // Scanner sc=new Scanner(System.in);
         strlen = Input.length();
         if (strlen < 8 || strlen > 15) {
             LENGTH_CHECK = false;
@@ -16,7 +19,7 @@ class Password {
         }
         for (int i = 0; i < strlen; i++) {
             if (!HAS_NUMERIC) {
-                if (Input.charAt(i) <= '9' && Input.charAt(i) >= 0) {
+                if (Input.charAt(i) <= '9' && Input.charAt(i) >= '0') {
                     HAS_NUMERIC = true;
                     // break;
                 }
@@ -32,8 +35,10 @@ class Password {
                 }
             }
         }
-        if(NO_SPACES&&HAS_LOWERCASE&&HAS_UPPERCASE&&LENGTH_CHECK){
+        if(NO_SPACES&&HAS_LOWERCASE&&HAS_UPPERCASE&&HAS_NUMERIC&&LENGTH_CHECK){
             System.out.println("Your password is valid!");
+            // sc.next();
+            Driver.sleep(3000);
             return true;
         }
         else{
@@ -50,6 +55,8 @@ class Password {
             if(!HAS_NUMERIC){
                 System.out.println("Password must contain at least one numeric digit");
             }
+            // sc.next();
+            Driver.sleep(3000);
             return false;
         }
 

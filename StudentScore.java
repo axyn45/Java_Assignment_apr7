@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+
+import javafx.scene.input.InputEvent;
 import javafx.util.*;
 
 class StudentScore {
@@ -6,22 +8,43 @@ class StudentScore {
     ArrayList<Course> Courses = new ArrayList<Course>();
 
     // int listSize=0;
-    public void addStudent(String id, String name, boolean gender) {
+    public boolean addStudent(String INPUT) {
+        if(INPUT.equals("end")) return false;
+        String id;
+        String name;
+        boolean gender; //false for male, true for female
+
+        String[] container=INPUT.split(",");
+        id=container[0];
+        name=container[1];
+        gender=container[2].equals("f")?true:false;
+
         Student newcomer = new Student(id, name, gender);
         Students.add(newcomer);
-        // listSize++;
-
+        return true;
     }
 
-    public void addRecord(String id, String courseName, int score) {
+    public boolean addRecord(String INPUT) {
+        String id;
+        String courseName;
+        int score;
+
+        String[] container = INPUT.split("，");
+        id = container[0];
+        if(id.equals("end")) return false;
+
+        courseName = container[1];
+        score = Integer.parseInt(container[2]);
+
         boolean flag_s = false, flag_c = false;
         for (int i = 0; i < Students.size(); i++) {
-            if(flag_s&&flag_c) break;
+            if (flag_s && flag_c)
+                break;
 
-            if(i>=Courses.size()&&!flag_c){
-                Course newcourse=new Course(courseName,score);
+            if (i >= Courses.size() && !flag_c) {
+                Course newcourse = new Course(courseName, score);
                 Courses.add(newcourse);
-                flag_c=true;
+                flag_c = true;
             }
             if (!flag_s) {
                 if (id.equals(Students.get(i).getID())) {
@@ -34,9 +57,10 @@ class StudentScore {
                 if (courseName.equals(Courses.get(i).getCourseName())) {
                     Courses.get(i).add(score);
                 }
-                flag_c=true;
+                flag_c = true;
             }
         }
+        return true;
     }
 
     public void showScoresByStudent() {
@@ -50,8 +74,8 @@ class StudentScore {
     public void showScoresByCourse() {
         System.out.println("Course\t\tAverage Score");
 
-        for(int i=0;i<Courses.size();i++){
-            System.out.printf("%s\t\t%.0lf\n", Courses.get(i).getCourseName(),Courses.get(i).getntAvgScore());
+        for (int i = 0; i < Courses.size(); i++) {
+            System.out.printf("%s\t\t%.0lf\n", Courses.get(i).getCourseName(), Courses.get(i).getntAvgScore());
         }
     }
 }
